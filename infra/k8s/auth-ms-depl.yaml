@@ -1,0 +1,38 @@
+#definition du deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-ms-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth-ms
+  template:
+    metadata:
+      labels:
+        app: auth-ms
+    spec:
+      containers:
+        - name: auth-ms
+          image: iamanismenaa/auth-ms
+          env:
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT_KEY
+---
+#definition du cluster IP service
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-ms-srv
+spec:
+  selector:
+    app: auth-ms
+  ports:
+    - name: auth-ms
+      protocol: TCP
+      port: 3000
+      targetPort: 3000
