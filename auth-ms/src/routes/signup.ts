@@ -53,7 +53,8 @@ async (req: Request, res: Response) => {
   // genreate a JWT
   const userJwt = jwt.sign({
     id: user.id,
-    email: user.email
+    email: user.email,
+    authorization: user.authorization
   }, process.env.JWT_KEY!)
   
   req.session = {

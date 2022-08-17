@@ -14,3 +14,7 @@ spec:
             backend:
               serviceName: auth-ms-srv
               servicePort: 3000
+          - path: /api/departements/?(.*)
+            backend:
+              serviceName: init-ms-srv
+              servicePort: 3000

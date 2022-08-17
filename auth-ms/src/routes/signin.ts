@@ -36,7 +36,8 @@ async (req: Request, res: Response) => {
   // generate jwt
   const userJwt = jwt.sign({
     id: existingUser.id,
-    email: existingUser.email
+    email: existingUser.email,
+    authorization: existingUser.authorization
   }, process.env.JWT_KEY!) // it is a secret private key
 
   //store the jwt on session object

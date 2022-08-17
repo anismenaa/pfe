@@ -1,0 +1,38 @@
+#definition du deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: init-ms-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: init-ms
+  template:
+    metadata:
+      labels:
+        app: init-ms
+    spec:
+      containers:
+        - name: init-ms
+          image: iamanismenaa/init-ms
+          env:
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT_KEY
+---
+#definition du cluster IP service
+apiVersion: v1
+kind: Service
+metadata:
+  name: init-ms-srv
+spec:
+  selector:
+    app: init-ms
+  ports:
+    - name: init-ms
+      protocol: TCP
+      port: 3000
+      targetPort: 3000
