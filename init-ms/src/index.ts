@@ -35,7 +35,7 @@ const start = async () => {
   }
   // connection to mongodd
   try {
-    await natsWrapper.connect('pfe', 'jdkfl', 'http://nats-streaming-server-srv:4222')
+    await natsWrapper.connect('pfe', 'init-ms', 'http://nats-streaming-server-srv:4222')
     
     natsWrapper.client.on('close', () => {
       console.log('Nats connection closed')

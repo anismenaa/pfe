@@ -7,6 +7,7 @@ interface DemandeAttrs {
   date_creation: Date
   validation_1: boolean
   validation_2: boolean
+  finalised: boolean
 }
 
 interface DemandeDoc extends mongoose.Document {
@@ -16,6 +17,7 @@ interface DemandeDoc extends mongoose.Document {
   date_creation: Date
   validation_1: boolean
   validation_2: boolean
+  finalised: boolean  
 }
 
 interface DemandeModel extends mongoose.Model<DemandeDoc> {
@@ -48,6 +50,10 @@ const demandeSchema = new mongoose.Schema({
   validation_2: {
     type: Boolean,
     default: false,
+    required: true
+  },
+  finalised: {
+    type: Boolean,
     required: true
   }
 

@@ -26,3 +26,7 @@ spec:
             backend:
               serviceName: demande-ms-srv
               servicePort: 3000
+          - path: /api/validation/?(.*)
+            backend:
+              serviceName: validation-ms-srv
+              servicePort: 3000

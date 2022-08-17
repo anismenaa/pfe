@@ -20,7 +20,8 @@ router.post('/api/demandes/create', [
     title: title,
     date_creation: new Date(),
     validation_1: false,
-    validation_2: false
+    validation_2: false,
+    finalised: false
   })
 
   // we save and then publish the event
@@ -35,7 +36,8 @@ router.post('/api/demandes/create', [
       departementId: demande.departementId,
       date_creation: demande.date_creation,
       validation_1: demande.validation_1,
-      validation_2: demande.validation_2
+      validation_2: demande.validation_2,
+      finalised: demande.finalised
     })
 
     res.status(201).send(demande)

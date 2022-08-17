@@ -8,6 +8,7 @@ import {natsWrapper, errorHandler} from '@anismenaapfeesi/common-api'
 import { demandeCreateRouter } from './routes/demande-create'
 import { demandeGetAllRouter } from './routes/demande-get-all'
 import { demandeGetOneRouter } from './routes/demande-get-one'
+import { demandeUpdatedRouter } from './routes/demande-update'
 //items
 import { ItemCreateRouter } from './routes/item-create'
 import { itemsOfDemandeRouter } from './routes/items-of-demande'
@@ -25,17 +26,19 @@ app.use(
   })
 )
 
-app.use(errorHandler)
+
 
 //routes demandes
 app.use(demandeCreateRouter)
 app.use(demandeGetAllRouter)
 app.use(demandeGetOneRouter)
+app.use(demandeUpdatedRouter)
 //routes items
 app.use(ItemCreateRouter)
 app.use(itemsOfDemandeRouter)
 app.use(itemDelete)
 
+app.use(errorHandler)
 
 const start = async () => {
 
@@ -46,7 +49,7 @@ const start = async () => {
 
   // connection to mongodb
   try {
-    await natsWrapper.connect('pfe', 'demande_publisher', 'http://nats-streaming-server-srv:4222')
+    await natsWrapper.connect('pfe', 'demande-ms', 'http://nats-streaming-server-srv:4222')
 
     natsWrapper.client.on('close', () => {
       console.log('Nats connection closed')

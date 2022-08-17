@@ -1,10 +1,9 @@
 import express, {Request, Response} from 'express'
-import 'express-async-errors'
 // get the model
 import { Item } from '../model/item'
 import { Demande } from '../model/demande'
 import { body } from 'express-validator'
-import { BRError, currentUser, natsWrapper, requireAuth } from '@anismenaapfeesi/common-api'
+import { BRError, currentUser, natsWrapper, requireAuth, validateRequest } from '@anismenaapfeesi/common-api'
 import { ItemCreatedPublisher } from '../events/ItemCreatedPublisher'
 
 const router = express.Router()
@@ -16,23 +15,30 @@ router.post('/api/items/create/:demandeId',[
   body('quantity')
     .isInt()
     .withMessage('quantity of the item must be valid')
-], currentUser, requireAuth,
+], validateRequest, currentUser, requireAuth,
 async (req: Request, res: Response) => {
+  
   // get the informations
   const demandeId = req.params.demandeId
+  
   const {name, quantity} = req.body
   
   // check for the demandeId
   const demandeExist = await Demande.findById(demandeId)
 
   if(!demandeExist) {
-    throw new BRError('demande does not exist')
+    return res.status(401).send('demande does not exist')
   }
 
+  if (demandeExist!.finalised === true) {
+    return res.status(401).send('demande is finalised, you cant add items')
+  }
   const newItem = Item.build({
     demandeId: demandeId,
     name: name,
-    quantity: quantity
+    quantity: quantity,
+    stock_exist: false,
+    quantity_exist: 0
   })
 
   // we save and then publish the Item:created 
@@ -44,7 +50,9 @@ async (req: Request, res: Response) => {
     id: newItem.id,
     demandeId: newItem.demandeId,
     name: newItem.name,
-    quantity: newItem.quantity
+    quantity: newItem.quantity,
+    stock_exist: newItem.stock_exist,
+    quantity_exist: newItem.quantity_exist
    })
 
    res.status(201).send(newItem)

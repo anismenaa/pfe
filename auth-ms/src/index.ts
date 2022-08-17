@@ -47,7 +47,7 @@ const start = async () => {
   }
 
   try {
-    await natsWrapper.connect('pfe', 'listener', 'http://nats-streaming-server-srv:4222')
+    await natsWrapper.connect('pfe', 'auth-ms', 'http://nats-streaming-server-srv:4222')
 
     natsWrapper.client.on('close', () => {
       console.log('Nats connection closed')
