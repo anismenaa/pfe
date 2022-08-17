@@ -7,6 +7,7 @@ import { User } from '../model/user'
 
 
 
+
 const router = express.Router()
 
 // let's create the user object
@@ -40,10 +41,9 @@ async (req: Request, res: Response) => {
 
   //check if the user already defined
   const existingUser = await User.findOne({email})
-
+  
   if(existingUser) {
     throw new BRError('email already in use')
-  
   }
 
   const user = User.build({departementId, authorization, name, surname, email, password})
@@ -54,7 +54,8 @@ async (req: Request, res: Response) => {
   const userJwt = jwt.sign({
     id: user.id,
     email: user.email,
-    authorization: user.authorization
+    authorization: user.authorization,
+    departementId: user.departementId
   }, process.env.JWT_KEY!)
   
   req.session = {

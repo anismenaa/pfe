@@ -18,3 +18,7 @@ spec:
             backend:
               serviceName: init-ms-srv
               servicePort: 3000
+          - path: /api/demandes/?(.*)
+            backend:
+              serviceName: demande-ms-srv
+              servicePort: 3000

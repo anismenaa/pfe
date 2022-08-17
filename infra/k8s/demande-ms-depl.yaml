@@ -1,0 +1,38 @@
+#definition du deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demande-ms-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demande-ms
+  template:
+    metadata:
+      labels:
+        app: demande-ms
+    spec:
+      containers:
+        - name: demande-ms
+          image: iamanismenaa/demande-ms
+          env:
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT_KEY
+---
+#definition du cluster IP service
+apiVersion: v1
+kind: Service
+metadata:
+  name: demande-ms-srv
+spec:
+  selector:
+    app: demande-ms
+  ports:
+    - name: demande-ms
+      protocol: TCP
+      port: 3000
+      targetPort: 3000

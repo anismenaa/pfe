@@ -9,7 +9,7 @@ import { currentuserRouter } from './routes/currentUser'
 import {errorHandler, NotFoundError, natsWrapper} from '@anismenaapfeesi/common-api'
 import { signinRouter } from './routes/signin'
 import { signoutRouter } from './routes/signout'
-import { DepartementCreatedListener } from './events/listeners/ticket-created-listener'
+import { DepartementCreatedListener } from './events/listeners/departement-created-listener'
 
 // definition du port 
 const port = 3000
