@@ -3,13 +3,13 @@ import mongoose from 'mongoose'
 interface ItemAttrs {
   demandeId: string
   name: string
-  quantity: Date
+  quantity: number
 }
 
 interface ItemDoc extends mongoose.Document {
   demandeId: string
   name: string
-  quantity: Date
+  quantity: number
 }
 
 interface ItemModel extends mongoose.Model<ItemDoc> {
@@ -26,7 +26,7 @@ const itemSchema = new mongoose.Schema({
     required: true
   },
   quantity: {
-    type: String,
+    type: Number,
     required: true
   }
 }, {

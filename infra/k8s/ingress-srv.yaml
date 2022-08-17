@@ -22,3 +22,7 @@ spec:
             backend:
               serviceName: demande-ms-srv
               servicePort: 3000
+          - path: /api/items/?(.*)
+            backend:
+              serviceName: demande-ms-srv
+              servicePort: 3000

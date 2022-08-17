@@ -4,10 +4,14 @@ import "express-async-errors"
 import cookieSession from 'cookie-session'
 import { json } from 'body-parser'
 import {natsWrapper, errorHandler} from '@anismenaapfeesi/common-api'
-
+//demandes
 import { demandeCreateRouter } from './routes/demande-create'
 import { demandeGetAllRouter } from './routes/demande-get-all'
 import { demandeGetOneRouter } from './routes/demande-get-one'
+//items
+import { ItemCreateRouter } from './routes/item-create'
+import { itemsOfDemandeRouter } from './routes/items-of-demande'
+import { itemDelete } from './routes/item-delete'
 
 const port = 3000
 const app = express()
@@ -23,10 +27,14 @@ app.use(
 
 app.use(errorHandler)
 
-//routes
+//routes demandes
 app.use(demandeCreateRouter)
 app.use(demandeGetAllRouter)
 app.use(demandeGetOneRouter)
+//routes items
+app.use(ItemCreateRouter)
+app.use(itemsOfDemandeRouter)
+app.use(itemDelete)
 
 
 const start = async () => {
