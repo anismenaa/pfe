@@ -8,6 +8,7 @@ interface DemandeAttrs {
   validation_1: boolean
   validation_2: boolean
   finalised: boolean
+  end_of_treatment: boolean
 }
 
 interface DemandeDoc extends mongoose.Document {
@@ -18,6 +19,7 @@ interface DemandeDoc extends mongoose.Document {
   validation_1: boolean
   validation_2: boolean
   finalised: boolean  
+  end_of_treatment: boolean
 }
 
 interface DemandeModel extends mongoose.Model<DemandeDoc> {
@@ -53,6 +55,10 @@ const demandeSchema = new mongoose.Schema({
     required: true
   },
   finalised: {
+    type: Boolean,
+    required: true
+  },
+  end_of_treatment: {
     type: Boolean,
     required: true
   }

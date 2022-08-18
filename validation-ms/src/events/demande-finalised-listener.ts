@@ -15,7 +15,7 @@ export class DemandefinalisedListener extends Listener<DemandefinalisedEvent> {
       throw new BRError("demande does not exist ")
     }
 
-    await Demande.updateOne({id}, {
+    await demande.updateOne({
       finalised: true
     })
 

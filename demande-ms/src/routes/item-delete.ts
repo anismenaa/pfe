@@ -12,6 +12,10 @@ router.delete('/api/items/:itemId', currentUser, requireAuth, async (req: Reques
   // get the params 
   const itemId = req.params.itemId
 
+  const itemExists = Item.findById({_id: itemId})
+  if (!itemExists) {
+    res.status(401).send('item does not exist')
+  }
   Item.deleteOne({id: itemId})
     .then(()=>{
       // publish an item:delete event

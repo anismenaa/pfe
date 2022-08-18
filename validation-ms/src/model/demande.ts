@@ -9,6 +9,7 @@ interface DemandeAttrs {
   validation_1: boolean
   validation_2: boolean
   finalised: boolean
+  end_of_treatment: boolean
 }
 
 interface DemandeDoc extends mongoose.Document {
@@ -20,6 +21,7 @@ interface DemandeDoc extends mongoose.Document {
   validation_1: boolean
   validation_2: boolean
   finalised: boolean  
+  end_of_treatment: boolean
 }
 
 interface DemandeModel extends mongoose.Model<DemandeDoc> {
@@ -57,6 +59,10 @@ const demandeSchema = new mongoose.Schema({
   finalised: {
     type: Boolean,
     required: true
+  },
+  end_of_treatment: {
+    type: Boolean,
+    required: true
   }
 
 }, {
@@ -78,7 +84,8 @@ demandeSchema.statics.build = (attrs: DemandeAttrs) => {
     date_creation: attrs.date_creation,
     validation_1: attrs.validation_1,
     validation_2: attrs.validation_2,
-    finalised: attrs.finalised
+    finalised: attrs.finalised,
+    end_of_treatment: attrs.end_of_treatment
   })
 }
 

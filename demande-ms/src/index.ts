@@ -9,10 +9,13 @@ import { demandeCreateRouter } from './routes/demande-create'
 import { demandeGetAllRouter } from './routes/demande-get-all'
 import { demandeGetOneRouter } from './routes/demande-get-one'
 import { demandeUpdatedRouter } from './routes/demande-update'
+import { getDemandesDep } from './routes/director/demande-get-all'
 //items
 import { ItemCreateRouter } from './routes/item-create'
 import { itemsOfDemandeRouter } from './routes/items-of-demande'
 import { itemDelete } from './routes/item-delete'
+import { DemandeValidated1Listener } from './events/demande-validated1-listener'
+import { DemandeValidated2Listener } from './events/demande-validated2-listener'
 
 const port = 3000
 const app = express()
@@ -33,6 +36,7 @@ app.use(demandeCreateRouter)
 app.use(demandeGetAllRouter)
 app.use(demandeGetOneRouter)
 app.use(demandeUpdatedRouter)
+app.use(getDemandesDep)
 //routes items
 app.use(ItemCreateRouter)
 app.use(itemsOfDemandeRouter)
@@ -59,6 +63,8 @@ const start = async () => {
     process.on('SIGINT', () => natsWrapper.client.close())
     process.on('SIGTERM', () => natsWrapper.client.close())
 
+    new DemandeValidated1Listener(natsWrapper.client).listen()
+    new DemandeValidated2Listener(natsWrapper.client).listen()
 
     await mongoose.connect('mongodb+srv://iamanismenaa:03031999@cluster0.21ubyg6.mongodb.net/demande-db?retryWrites=true&w=majority')
     console.log('connected to mongodb:demande-db')
