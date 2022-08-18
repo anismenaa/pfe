@@ -3,7 +3,7 @@ import mongoose from 'mongoose'
 import "express-async-errors"
 import cookieSession from 'cookie-session'
 import { json } from 'body-parser'
-import {natsWrapper, errorHandler} from '@anismenaapfeesi/common-api'
+import {natsWrapper, errorHandler, NotFoundError} from '@anismenaapfeesi/common-api'
 //demandes
 import { demandeCreateRouter } from './routes/demande-create'
 import { demandeGetAllRouter } from './routes/demande-get-all'
@@ -41,6 +41,13 @@ app.use(getDemandesDep)
 app.use(ItemCreateRouter)
 app.use(itemsOfDemandeRouter)
 app.use(itemDelete)
+
+
+// for not found pages (must be before errorHandler)
+app.all('*', async (req, res, next) => {
+  next(new NotFoundError()) 
+})
+
 
 app.use(errorHandler)
 

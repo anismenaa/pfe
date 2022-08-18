@@ -3,7 +3,7 @@ import mongoose from 'mongoose'
 import {json} from 'body-parser'
 import cookieSession from 'cookie-session'
 import "express-async-errors"
-import {natsWrapper, errorHandler} from '@anismenaapfeesi/common-api'
+import {natsWrapper, errorHandler, NotFoundError} from '@anismenaapfeesi/common-api'
 //listeners
 import { DemandeCreatedListener } from './events/demande-created-listener'
 import { DemandefinalisedListener } from './events/demande-finalised-listener'
@@ -29,6 +29,11 @@ app.use(
 //routes
 app.use(validateDemandeRouter)
 
+
+// for not found pages (must be before errorHandler)
+app.all('*', async (req, res, next) => {
+  next(new NotFoundError()) 
+})
 app.use(errorHandler)
 
 // connection to mongoose 
@@ -56,7 +61,7 @@ const start = async () => {
     new ItemDeletedListener(natsWrapper.client).listen()
 
     await mongoose.connect('mongodb+srv://iamanismenaa:03031999@cluster0.21ubyg6.mongodb.net/validation-db?retryWrites=true&w=majority')
-    console.log('connected to mongodb:auth-db')
+    console.log('connected to mongodb:validation-db')
   } catch (error) {
     console.log(error)
   }

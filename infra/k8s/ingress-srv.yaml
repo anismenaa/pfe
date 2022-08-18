@@ -30,3 +30,7 @@ spec:
             backend:
               serviceName: validation-ms-srv
               servicePort: 3000
+          - path: /api/achats/?(.*)
+            backend:
+              serviceName: achat-ms-srv
+              servicePort: 3000

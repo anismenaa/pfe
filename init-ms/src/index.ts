@@ -1,8 +1,9 @@
 import express from 'express'
-import { errorHandler, currentUser, natsWrapper } from '@anismenaapfeesi/common-api'
+import { errorHandler, currentUser, natsWrapper, NotFoundError } from '@anismenaapfeesi/common-api'
 import mongoose from 'mongoose'
 import cookieSession from 'cookie-session'
 import { json } from 'body-parser'
+import 'express-async-errors'
 //routes
 import {departementCreateRouter} from './routes/departement-create'
 import { departementGetAllRouter } from './routes/departement-get-all'
@@ -24,6 +25,12 @@ app.use(currentUser)
 //routes
 app.use(departementCreateRouter)
 app.use(departementGetAllRouter)
+
+// for not found pages (must be before errorHandler)
+app.all('*', async (req, res, next) => {
+  next(new NotFoundError()) 
+})
+
 
 // middlewares
 app.use(errorHandler)
