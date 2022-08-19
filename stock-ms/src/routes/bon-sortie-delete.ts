@@ -23,7 +23,7 @@ async(req: Request, res: Response) => {
     // then delete it and publish the event
     await bonSortieExist.delete()
       .then(()=> {
-        res.status(200).send(`bon sortie holding id: ${req.params.id} is deleted`)
+        res.status(200).send(`bon sortie holding id: ${req.params.idBonSortie} is deleted`)
       })
   }else{
     throw new BRError('the bon sortie looking for does not exists, please try one more time !')

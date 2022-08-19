@@ -2,6 +2,7 @@ import { BRError, currentUser, natsWrapper, requireAuth } from '@anismenaapfeesi
 import express, {Request, Response} from 'express'
 import 'express-async-errors'
 import { ItemAchatDeletedPublisher } from '../events/ItemAchat-deteleted-publisher'
+import { BonEntree } from '../models/bonEntree'
 
 // get the model
 import {Item} from '../models/item'
@@ -18,6 +19,11 @@ router.delete('/api/achats/item/delete/:itemId', currentUser, requireAuth, async
   const itemExists = await Item.findById(itemId)
   if (!itemExists) {
     throw new BRError('item does not exist')
+  }
+  // check if bon entree is validated 
+  const bonEntreeOfitem = await BonEntree.findById(itemExists.bonEntreeId)
+  if(bonEntreeOfitem?.validate_BE) {
+    throw new BRError('bon entree is already validated, you cannot delete an item')
   }
   await itemExists.deleteOne({_id: itemId})
     .then(()=>{

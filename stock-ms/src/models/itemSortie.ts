@@ -1,16 +1,14 @@
 import mongoose from 'mongoose'
 
 interface ItemAttrs {
-  id: string
-  bonEntreeId: string
-  name: string
+  itemId: string
+  bonSortieId: string
   quantity: number
 }
 
 interface ItemDoc extends mongoose.Document {
-  id: string
-  bonEntreeId: string
-  name: string
+  itemId: string
+  bonSortieId: string
   quantity: number
 }
 
@@ -18,12 +16,12 @@ interface ItemModel extends mongoose.Model<ItemDoc> {
   build(attrs: ItemAttrs): ItemDoc
 }
 
-const ItemSchema = new mongoose.Schema({
-  bonEntreeId: {
+const ItemBsSchema = new mongoose.Schema({
+  itemId: {
     type: String,
     required: true
   },
-  name: {
+  bonSortieId: {
     type: String,
     required: true
   },
@@ -42,15 +40,10 @@ const ItemSchema = new mongoose.Schema({
   }
 })
 
-ItemSchema.statics.build = (attrs: ItemAttrs) => {
-  return new Item({
-    id: attrs.id,
-    bonEntreeId: attrs.bonEntreeId,
-    name: attrs.name,
-    quantity: attrs.quantity,
-  })
+ItemBsSchema.statics.build = (attrs: ItemAttrs) => {
+  return new ItemBs(attrs)
 }
 
-const Item = mongoose.model<ItemDoc, ItemModel>('Item', ItemSchema)
+const ItemBs = mongoose.model<ItemDoc, ItemModel>('ItemBs', ItemBsSchema)
 
-export {Item}
+export {ItemBs}

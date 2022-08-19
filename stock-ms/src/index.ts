@@ -20,6 +20,9 @@ import { bonSortieDeleted } from './routes/bon-sortie-delete'
 import { bonSortieGetAll } from './routes/get-all-bon-sortie'
 import { bonSortieGetOne } from './routes/get-one-bon-sortie'
 import { bonSortieFinalisation } from './routes/bon-sortie-finalise'
+import { itemCreateBs } from './routes/item-create'
+import { itemGetAllForBs } from './routes/item-getAll-bonSortie'
+import { itemDelete } from './routes/item-delete'
 
 const port = 3000
 
@@ -45,6 +48,10 @@ app.use(bonSortieDeleted)
 app.use(bonSortieGetAll)
 app.use(bonSortieGetOne)
 app.use(bonSortieFinalisation)
+
+app.use(itemCreateBs)
+app.use(itemGetAllForBs)
+app.use(itemDelete)
 
 // for not found pages (must be before errorHandler)
 app.all('*', async (req, res, next) => {
