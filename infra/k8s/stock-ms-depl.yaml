@@ -1,0 +1,38 @@
+#definition du deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stock-ms-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: stock-ms
+  template:
+    metadata:
+      labels:
+        app: stock-ms
+    spec:
+      containers:
+        - name: stock-ms
+          image: iamanismenaa/stock-ms
+          env:
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT_KEY
+---
+#definition du cluster IP service
+apiVersion: v1
+kind: Service
+metadata:
+  name: stock-ms-srv
+spec:
+  selector:
+    app: stock-ms
+  ports:
+    - name: stock-ms
+      protocol: TCP
+      port: 3000
+      targetPort: 3000

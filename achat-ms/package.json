@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@anismenaapfeesi/common-api": "^1.0.54",
+    "@anismenaapfeesi/common-api": "^1.0.58",
     "@types/cookie-session": "^2.0.44",
     "cookie-session": "^2.0.0",
     "express-async-errors": "^3.1.1",

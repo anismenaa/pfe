@@ -33,6 +33,7 @@ async (req: Request, res: Response) => {
       res.status(200).send('bon entree created successfully .')  
       // publish the bonEntree:created to stock-ms
       new BonEntreeCreatedPublisher(natsWrapper.client).publish({
+        id: bonEntree.id,
         vendor: bonEntree.vendor,
         total: bonEntree.total,
         validate_BE: bonEntree.validate_BE

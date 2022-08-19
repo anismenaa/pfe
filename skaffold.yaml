@@ -48,3 +48,11 @@ build:
         manual:
           - src: 'src/**/*.ts'
             dest: .
+    - image: iamanismenaa/stock-ms
+      context: stock-ms
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .

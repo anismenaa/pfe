@@ -9,7 +9,10 @@ import { createBonEntree } from './routes/bon-entree-create'
 import { deleteBonEntree } from './routes/bon-entree-delete'
 import { getAllBonEntrees } from './routes/get-all-bonEntree'
 import { getOneBonEntrees } from './routes/get-one-bonEntree'
-
+import { itemCreateRouter } from './routes/item-create'
+import { itemDelete } from './routes/item-delete'
+import { itemGetOne } from './routes/item-get-one'
+import { getAllItems } from './routes/get-item-bonEntree'
 const port = 3000
 
 const app = express()
@@ -30,6 +33,10 @@ app.use(deleteBonEntree)
 app.use(getAllBonEntrees)
 app.use(getOneBonEntrees)
 
+app.use(itemCreateRouter)
+app.use(itemDelete)
+app.use(itemGetOne)
+app.use(getAllItems)
 // for not found pages (must be before errorHandler)
 app.all('*', async (req, res, next) => {
   next(new NotFoundError()) 
