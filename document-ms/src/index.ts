@@ -10,6 +10,13 @@ import mongoose from 'mongoose'
 import { demandeAchatGetAll } from './routes/demande-achat/getAll'
 import { demandeAchatGetOneById } from './routes/demande-achat/getOne'
 import { demandeAchatGetAllperUser } from './routes/demande-achat/getAll-per-user'
+import { demandeAchatGetAllperDepartement } from './routes/demande-achat/getAll-per-departement'
+
+import { bonEntreeGetAll } from './routes/bon-entree/getAll'
+import { bonEntreeGetOne } from './routes/bon-entree/getOne'
+
+import { bonSortieGetAll } from './routes/bon-sortie/getAll'
+import { bonSortieGetOne } from './routes/bon-sortie/getOne'
 
 //event listener
 import { DemandeCreatedListener } from './events/demande-created-listener'
@@ -31,7 +38,8 @@ import { BonSortiefinalisedListener } from './events/bonSortie-finalised-listene
 import { BonSortieDeletedListener } from './events/bonSortie-deleted-listener'
 import { ItemBsCreatedListener } from './events/itemBs-created-listener'
 import { ItemBsDeletedListener } from './events/itemBs-deleted-listener'
-import { demandeAchatGetAllperDepartement } from './routes/demande-achat/getAll-per-departement'
+
+
 
 
 
@@ -54,6 +62,12 @@ app.use(demandeAchatGetAll)
 app.use(demandeAchatGetOneById)
 app.use(demandeAchatGetAllperUser)
 app.use(demandeAchatGetAllperDepartement)
+
+app.use(bonEntreeGetAll)
+app.use(bonEntreeGetOne)
+
+app.use(bonSortieGetAll)
+app.use(bonSortieGetOne)
 
 // for not found pages (must be before errorHandler)
 app.all('*', async (req, res, next) => {
