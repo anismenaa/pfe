@@ -5,7 +5,13 @@ import {errorHandler, natsWrapper, NotFoundError } from '@anismenaapfeesi/common
 import "express-async-errors"
 import mongoose from 'mongoose'
 
-// routes
+
+//routes
+import { demandeAchatGetAll } from './routes/demande-achat/getAll'
+import { demandeAchatGetOneById } from './routes/demande-achat/getOne'
+import { demandeAchatGetAllperUser } from './routes/demande-achat/getAll-per-user'
+
+//event listener
 import { DemandeCreatedListener } from './events/demande-created-listener'
 import { DemandeValidated1Listener } from './events/demande-validated1-listener'
 import { DemandeValidated2Listener } from './events/demande-validated2-listener'
@@ -25,6 +31,7 @@ import { BonSortiefinalisedListener } from './events/bonSortie-finalised-listene
 import { BonSortieDeletedListener } from './events/bonSortie-deleted-listener'
 import { ItemBsCreatedListener } from './events/itemBs-created-listener'
 import { ItemBsDeletedListener } from './events/itemBs-deleted-listener'
+import { demandeAchatGetAllperDepartement } from './routes/demande-achat/getAll-per-departement'
 
 
 
@@ -42,6 +49,11 @@ app.use(
   })
 )
 
+
+app.use(demandeAchatGetAll)
+app.use(demandeAchatGetOneById)
+app.use(demandeAchatGetAllperUser)
+app.use(demandeAchatGetAllperDepartement)
 
 // for not found pages (must be before errorHandler)
 app.all('*', async (req, res, next) => {
