@@ -23,17 +23,20 @@ async (req: Request, res: Response) => {
     for(let i = 0; i < demandes.length ; i++) {
       const demande = demandes[i]
       const items = await Item.find({demandeId: demande._id})
-      let elt: demandeAchatData = {
-        demandeId: demande._id,
-        departementId: demande.departementId,
-        userId: demande.userId,
-        items: items,
-        title: demande.title,
-        validation_1: demande.validation_1,
-        validation_2: demande.validation_2,
-        finalised: demande.finalised
+      // verify if the demande is finalised
+      if (demande.finalised) {
+        let elt: demandeAchatData = {
+          demandeId: demande._id,
+          departementId: demande.departementId,
+          userId: demande.userId,
+          items: items,
+          title: demande.title,
+          validation_1: demande.validation_1,
+          validation_2: demande.validation_2,
+          finalised: demande.finalised
+        }
+        alldemandes.push(elt)
       }
-      alldemandes.push(elt)
     } 
   
 

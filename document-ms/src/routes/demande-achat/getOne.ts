@@ -23,19 +23,24 @@ async (req: Request, res: Response) => {
     let alldemandes: demandeAchatData[] = []
     
       const items = await Item.find({demandeId: demande!._id})
-      let elt: demandeAchatData = {
-        demandeId: demande._id,
-        departementId: demande.departementId,
-        userId: demande.userId,
-        items: items,
-        title: demande.title,
-        validation_1: demande.validation_1,
-        validation_2: demande.validation_2,
-        finalised: demande.finalised
+      if (demande.finalised) {
+        let elt: demandeAchatData = {
+          demandeId: demande._id,
+          departementId: demande.departementId,
+          userId: demande.userId,
+          items: items,
+          title: demande.title,
+          validation_1: demande.validation_1,
+          validation_2: demande.validation_2,
+          finalised: demande.finalised
+        }
+        res.status(200).send(elt)
+      } else {
+        throw new BRError("demande achat with this id is not finalised")
       }
   
 
-    res.status(200).send(elt)
+ 
   } else {
     throw new BRError('you are not authorised to check all the demandes achats')
   }
