@@ -1,5 +1,6 @@
-import { BRError, currentUser, requireAuth } from '@anismenaapfeesi/common-api'
+import { BRError, currentUser, natsWrapper, requireAuth } from '@anismenaapfeesi/common-api'
 import express from 'express'
+import { ItemBsDeletedPublisher } from '../events/itemBs-deleted-publisher'
 import { ItemBs } from '../models/itemSortie'
 
 const router = express.Router()
@@ -22,6 +23,10 @@ async(req, res) => {
 
   await itemExist.delete()
     .then(() => {
+      new ItemBsDeletedPublisher(natsWrapper.client).publish({
+        id: itemExist.id
+      })
+      
       res.status(201).send(`item ${itemId} is deleted`)
     })
     .catch(()=>{

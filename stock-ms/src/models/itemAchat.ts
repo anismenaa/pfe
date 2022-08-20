@@ -44,7 +44,7 @@ const ItemSchema = new mongoose.Schema({
 
 ItemSchema.statics.build = (attrs: ItemAttrs) => {
   return new Item({
-    id: attrs.id,
+    _id: attrs.id,
     bonEntreeId: attrs.bonEntreeId,
     name: attrs.name,
     quantity: attrs.quantity,

@@ -1,5 +1,6 @@
-import { BRError, currentUser, requireAuth } from '@anismenaapfeesi/common-api'
+import { BRError, currentUser, natsWrapper, requireAuth } from '@anismenaapfeesi/common-api'
 import express, {Request, Response} from 'express'
+import { BonSortieDeletedPublisher } from '../events/bonSortie-deleted-publisher'
 import { BonSortie } from '../models/bonSortie'
 
 const router = express.Router()
@@ -23,6 +24,11 @@ async(req: Request, res: Response) => {
     // then delete it and publish the event
     await bonSortieExist.delete()
       .then(()=> {
+
+        new BonSortieDeletedPublisher(natsWrapper.client).publish({
+          id: bonSortieExist.id
+        })
+
         res.status(200).send(`bon sortie holding id: ${req.params.idBonSortie} is deleted`)
       })
   }else{

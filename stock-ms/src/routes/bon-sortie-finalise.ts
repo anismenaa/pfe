@@ -1,5 +1,6 @@
-import { BRError, currentUser, requireAuth } from '@anismenaapfeesi/common-api'
+import { BRError, currentUser, natsWrapper, requireAuth } from '@anismenaapfeesi/common-api'
 import express, { Request, Response } from 'express'
+import { BonSortieFinalisedPublisher } from '../events/bonSortie-finalised-publisher'
 import { BonSortie } from '../models/bonSortie'
 
 const router = express.Router()
@@ -22,13 +23,16 @@ async(req: Request, res: Response) => {
       throw new BRError('bon de sortie is already finalised')
     }
     // if existed 
-    bonSortieExist.updateOne({
+    await bonSortieExist.updateOne({
       finalised: true,
       finalisedBy: req.currentUser.id
     })
       .then((data) => {
         // we publish the finalisation
-        
+        new BonSortieFinalisedPublisher(natsWrapper.client).publish({
+          id: bonSortieExist.id,
+          finalisedBy: req.currentUser!.id
+        })
         //then send the result to the client
         res.status(201).send(`bon sortie with id: ${req.params.bonSortieId} is finalised`)
       })

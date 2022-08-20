@@ -10,6 +10,8 @@ export class ItemAchatDeletedListener extends Listener<ItemAchatDeletedEvent> {
 
     const {id} = data
     
+  
+
     await Item.deleteOne({_id: id})
       .then(()=> {
         console.log('Item deleted successfully in the stock ms')

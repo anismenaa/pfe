@@ -1,5 +1,6 @@
-import { BRError, currentUser, requireAuth } from '@anismenaapfeesi/common-api'
+import { BRError, currentUser, natsWrapper, requireAuth } from '@anismenaapfeesi/common-api'
 import express from 'express'
+import { ItemBsCreatedPublisher } from '../events/itemBs-created-publisher'
 import { BonSortie } from '../models/bonSortie'
 import { Item } from '../models/itemAchat'
 import { ItemBs } from '../models/itemSortie'
@@ -45,6 +46,12 @@ async(req, res) => {
   const finalQuantity = itemBe.quantity - quantity
   await itemBuild.save()
     .then(async (data)=> {
+      new ItemBsCreatedPublisher(natsWrapper.client).publish({
+        id: itemBuild.id,
+        bonSortie: itemBuild.bonSortieId,
+        quantity: itemBuild.quantity,
+        itemId: itemBuild.itemId
+      })
       // on va modifier la quantité dans l'autre table
       await Item.findOneAndUpdate({_id: itemId}, {
         quantity: finalQuantity

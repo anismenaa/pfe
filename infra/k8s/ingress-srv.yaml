@@ -38,3 +38,7 @@ spec:
             backend:
               serviceName: stock-ms-srv
               servicePort: 3000
+          - path: /api/document/?(.*)
+            backend:
+              serviceName: document-ms-srv
+              servicePort: 3000

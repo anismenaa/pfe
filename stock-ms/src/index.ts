@@ -23,6 +23,7 @@ import { bonSortieFinalisation } from './routes/bon-sortie-finalise'
 import { itemCreateBs } from './routes/item-create'
 import { itemGetAllForBs } from './routes/item-getAll-bonSortie'
 import { itemDelete } from './routes/item-delete'
+import { BonEntreeValidatedListener } from './events/bonEntree-validated-listener'
 
 const port = 3000
 
@@ -79,11 +80,12 @@ const start = async () => {
 
     new BonEntreeCreatedListener(natsWrapper.client).listen()
     new BonEntreeDeletedListener(natsWrapper.client).listen()
+    new BonEntreeValidatedListener(natsWrapper.client).listen()
     new ItemAchatCreatedListener(natsWrapper.client).listen()
     new ItemAchatDeletedListener(natsWrapper.client).listen()
-
+    
     await mongoose.connect('mongodb+srv://iamanismenaa:03031999@cluster0.21ubyg6.mongodb.net/stock-db?retryWrites=true&w=majority')
-    console.log('connected to mongodb:achat-db')
+    console.log('connected to mongodb:stock-db')
   } catch (error) {
     console.log(error)
   }

@@ -13,9 +13,13 @@ async (req: Request, res: Response) => {
   }
   const bonEntreeId = req.params.id
   // fetch for it in the db
-  const bonEntreeExist = await BonEntree.findById({_id: bonEntreeId})
+  const bonEntreeExist = await BonEntree.findById(bonEntreeId)
   if(!bonEntreeExist) {
     throw new BRError('bon entree does not exist or has been deleted')
+  }
+
+  if(bonEntreeExist.validate_BE) {
+    throw new BRError('you cannot delete a validated bon entree.')
   }
   await BonEntree.deleteOne({_id: bonEntreeId})
     .then(()=> {

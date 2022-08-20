@@ -1,6 +1,7 @@
-import { BRError, currentUser, requireAuth } from '@anismenaapfeesi/common-api'
+import { BRError, currentUser, natsWrapper, requireAuth } from '@anismenaapfeesi/common-api'
 import express, {Request, Response} from 'express'
 import { body } from 'express-validator'
+import { BonSortieCreatedPublisher } from '../events/bonSortie-created-publisher'
 import { BonSortie } from '../models/bonSortie'
 
 
@@ -31,6 +32,13 @@ async (req: Request, res: Response) => {
   await newBonSortie.save()
     .then((data)=>{
       // we publish the event as if the bon sortie is created BonSortie:created
+      new BonSortieCreatedPublisher(natsWrapper.client).publish({
+        id: newBonSortie.id,
+        departementId: newBonSortie.departementId,
+        date_sortie: newBonSortie.date_sortie,
+        finalised: newBonSortie.finalised,
+        finalisedBy: newBonSortie.finalisedBy,
+      })
       res.status(201).send(data)
     })
     .catch(()=> {

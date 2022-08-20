@@ -13,6 +13,7 @@ import { itemCreateRouter } from './routes/item-create'
 import { itemDelete } from './routes/item-delete'
 import { itemGetOne } from './routes/item-get-one'
 import { getAllItems } from './routes/get-item-bonEntree'
+import { BonEntreeValidated } from './routes/validate-bon-entree'
 const port = 3000
 
 const app = express()
@@ -30,6 +31,7 @@ app.use(
 // routes
 app.use(createBonEntree)
 app.use(deleteBonEntree)
+app.use(BonEntreeValidated)
 app.use(getAllBonEntrees)
 app.use(getOneBonEntrees)
 

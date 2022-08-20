@@ -5,6 +5,7 @@ import { ItemDeletedPublisher } from '../events/ItemDeletedPublisher'
 
 // get the model
 import {Item} from '../model/item'
+import { Demande } from '../model/demande'
 
 const router = express.Router()
 
@@ -12,11 +13,23 @@ router.delete('/api/items/:itemId', currentUser, requireAuth, async (req: Reques
   // get the params 
   const itemId = req.params.itemId
 
-  const itemExists = Item.findById({_id: itemId})
+  const itemExists = await Item.findById({_id: itemId})
+
+    // check for the demandeId
+    const demandeId = itemExists?.demandeId
+    const demandeExist = await Demande.findById(demandeId)
+
+    if(!demandeExist) {
+      return res.status(401).send('demande does not exist')
+    }
+  
+    if (demandeExist!.finalised === true) {
+      return res.status(401).send('demande is finalised, you cant delete items')
+    }
   if (!itemExists) {
     res.status(401).send('item does not exist')
   }
-  Item.deleteOne({id: itemId})
+  await Item.deleteOne({id: itemId})
     .then(()=>{
       // publish an item:delete event
       try {
