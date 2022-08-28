@@ -4,6 +4,8 @@ metadata:
   name: ingress-service
   annotations:
     kubernetes.io/ingress.class: nginx
+    ingress.appscode.com/enable-cors: 'true'
+    ingress.appscode.com/cors-allow-origin: 'http://localhost:3000'
     nginx.ingress.kubernetes.io/use-regex: 'true'
 spec:
   rules:
@@ -41,4 +43,8 @@ spec:
           - path: /api/document/?(.*)
             backend:
               serviceName: document-ms-srv
+              servicePort: 3000
+          - path: /?(.*)
+            backend:
+              serviceName: frontend-srv
               servicePort: 3000

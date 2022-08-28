@@ -1,0 +1,96 @@
+.home_background {
+  height: 400px;
+  width: 100%;
+  background-image: url("/images/background.jpg");
+  opacity: 0.8;
+}
+
+.backgroud_text {
+  position: relative;
+  display: flex;
+  width: 80%;
+  margin: auto;
+}
+
+.left_background_text {
+  width: 70%;
+  color: white;
+  margin-top: 100px;
+}
+
+.left_background_text_h1 {
+  font-weight: bold;
+}
+
+
+.right_background_text {
+  width: 30%;
+  text-align: center;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 20%;
+} 
+
+.right_background_text button {
+  width: 100%;
+  font-weight: bold;
+  border-radius: 50px;
+}
+
+/* about */
+.about_section {
+  padding-top: 30px;
+  background-color: rgb(134, 134, 134);
+  padding-bottom: 90px;
+}
+
+.about_section_title {
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.6em;
+
+}
+
+.about_section_cards {
+  margin-top: 50px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.card {
+  width: 25%;
+}
+
+.card-title {
+  text-align: center;
+  font-weight: bold;
+  color: yellow;
+}
+/* footer */
+.footer{
+  padding: 30px;
+  background-color: #545557;
+  color: #ffffff;
+  display: flex;
+  justify-content: space-around;
+  position: relative;
+} 
+
+.informations_homepage_h4{
+  text-align: center;
+}
+
+.logo_homepage{
+  position: absolute;
+  bottom: 10px;
+}
+
+.logo_homepage_h1{
+  text-align: center;
+}
+
+
+.rights-statement_homepage{
+  color: #000;
+}

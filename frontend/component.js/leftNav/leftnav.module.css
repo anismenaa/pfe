@@ -1,0 +1,55 @@
+.leftNav {
+  height: 100vh;
+  background-color: #545557;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+.profilepic{
+  display: block;
+  margin: auto;
+  border-radius: 50%;
+  border: 3px solid rgb(32, 29, 29)
+}
+.userInformation{
+  border: 1px solid green;
+  text-align: center;
+  margin-top: 10px;
+  font-weight: bold;
+  background-color: antiquewhite;
+  opacity: 0.8;
+}
+
+.userEmail{
+
+}
+
+.userDepartement{
+
+}
+
+.menuItem{
+  margin-top: 20px;
+  text-align: center;
+}
+
+.signoutSection{
+  text-align: center;
+  position: absolute;
+  bottom: 20px;
+  width: 20%
+}
+
+/* item */
+.item{
+  margin: 10px 0 5px 0;
+  padding: 5px;
+  font-weight: bold;
+  border-bottom: 2px solid black;
+  display: block;
+  text-decoration: none;
+  color: white
+}
+
+.item:hover {
+  background-color: antiquewhite;
+}

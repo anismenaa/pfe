@@ -3,6 +3,7 @@ import { json } from 'body-parser'
 import mongoose from 'mongoose'
 import cookieSession from 'cookie-session'
 import 'express-async-errors'
+import cors from 'cors'
 //routes
 import { signUpRouter } from './routes/signup'
 import { currentuserRouter } from './routes/currentUser'
@@ -21,9 +22,11 @@ app.use(json())
 app.use(
   cookieSession({
     signed: false, //no encryption
-    secure: true // we must be on the https connection
+
   })
 )
+
+app.use(cors())
 //use routes
 app.use(signUpRouter)
 app.use(signinRouter)

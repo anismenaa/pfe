@@ -1,0 +1,14 @@
+.profile {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+
+}
+
+.leftSection {
+  width: 20%;
+}
+
+.rightSection { 
+  width: 80%;
+}
