@@ -3,6 +3,7 @@
   width: 80%;
   text-align: center;
   padding: 50px;
+  overflow: scroll;
 }
 
 .form_area{

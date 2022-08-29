@@ -1,0 +1,44 @@
+.global{
+  border: 1px solid red;
+  padding: 5px;
+  background-color: #fff;
+  font-size: 0.8em;
+}
+
+.header{
+  display: flex;
+  width: 80%;
+  margin: auto;
+  justify-content: space-between;
+
+}
+.title_section{
+  margin-top: 5px;
+  margin-bottom: 5px;
+  text-decoration: underline;
+}
+
+.items{
+  width: 80%;
+  margin: auto;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+
+.validation_section{
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+  margin: auto;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.buttons{
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+  margin: auto;
+  margin-top: 20px;
+}

@@ -50,6 +50,24 @@ import Router from "next/router"
       }
 
     }
+
+    /* const messageAffichage = () => {
+      if(errors.length > 0) {
+        return(
+          <div className="alert alert-danger" role="alert">  
+            <ul>
+                      
+                  {errors.map(err => {
+                    return(
+                      <li>{err.message}</li>
+                    )
+                  })}            
+              
+            </ul>
+          </div>
+        )
+      }
+    } */
     return(
       <div className={styles.signin_page}>
         <div className={styles.sigin_title}>
@@ -72,16 +90,8 @@ import Router from "next/router"
             </Link>
           </div>
         </div>
-        <div class="alert alert-danger" role="alert">  
-          <ul>
-                    
-                {errors.map(err => {
-                  return(
-                    <li>{err.message}</li>
-                  )
-                })}            
-            
-          </ul>
+        <div>
+          
         </div>
       </div>
     )

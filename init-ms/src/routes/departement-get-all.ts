@@ -10,8 +10,10 @@ router.get('/api/departements/', requireAuth, async (req, res) => {
     const allDepartements = await Departement.find({})
 
     res.status(200).send(allDepartements)
+  }else{
+    throw new BRError('this is handled only by admins')
   }
-  throw new BRError('this is handled only by admins')
+  
 })
 
 export { router as departementGetAllRouter }

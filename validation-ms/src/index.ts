@@ -11,7 +11,8 @@ import { ItemCreatedListener } from './events/item-created-listener'
 //routers
 import { validateDemandeRouter } from './routes/validate-demande'
 import { ItemDeletedListener } from './events/item-deleted-listener'
-
+import { toValidate } from './routes/to_validate'
+import { demandeValidated1 } from './routes/demandes-validated'
 
 const port = 3000
 
@@ -28,6 +29,8 @@ app.use(
 
 //routes
 app.use(validateDemandeRouter)
+app.use(toValidate)
+app.use(demandeValidated1)
 
 
 // for not found pages (must be before errorHandler)

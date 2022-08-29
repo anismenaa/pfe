@@ -5,9 +5,8 @@ import Head from "next/head";
 import axios from "axios"
 import Router from "next/router"
 
-const AdminLeftNav = () => {
-  const [email, setEmail] = useState('')
-  const [departement, setDepartement] = useState('')
+const AdminLeftNav = ({email, departement}) => {
+ 
 
   const signout = () => {
     axios.post("https://pfe.dev/api/users/signout")
@@ -17,16 +16,6 @@ const AdminLeftNav = () => {
       })
   }
 
-  const getMeCurrentUser = async() => {
-    const currentUser = await axios.get("https://pfe.dev/api/users/currentUser")
-    console.log(currentUser)
-    setEmail(currentUser.data.currentUser.email)
-    setDepartement(currentUser.data.currentUser.departementId)
-  }
-
-  useEffect(()=> {
-    getMeCurrentUser()
-  })
 
   return(
     <>

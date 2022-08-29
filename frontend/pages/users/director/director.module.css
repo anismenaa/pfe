@@ -1,0 +1,7 @@
+.rightSection{
+  background-color: rgb(162, 162, 162);
+  width: 80%;
+  text-align: center;
+  padding: 50px;
+  overflow: scroll;
+}

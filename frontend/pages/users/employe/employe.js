@@ -9,7 +9,7 @@ const Employe = () => {
         <EmployeLeftNav />
       </div>
       <div className={employeStyle.rightSection}>
-       
+      
       </div>
     </div>
   )

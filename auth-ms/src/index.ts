@@ -11,7 +11,9 @@ import {errorHandler, NotFoundError, natsWrapper} from '@anismenaapfeesi/common-
 import { signinRouter } from './routes/signin'
 import { signoutRouter } from './routes/signout'
 import { DepartementCreatedListener } from './events/listeners/departement-created-listener'
-
+import { getAllUsers } from './routes/getAllUser'
+import { deleteUser } from './routes/userDelete'
+import { getUsersDep } from './routes/getUsersDep'
 // definition du port 
 const port = 3000
 
@@ -32,6 +34,9 @@ app.use(signUpRouter)
 app.use(signinRouter)
 app.use(signoutRouter)
 app.use(currentuserRouter)
+app.use(getAllUsers)
+app.use(deleteUser)
+app.use(getUsersDep)
 
 // for not found pages (must be before errorHandler)
 app.all('*', async (req, res, next) => {

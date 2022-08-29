@@ -10,6 +10,7 @@ import { demandeGetAllRouter } from './routes/demande-get-all'
 import { demandeGetOneRouter } from './routes/demande-get-one'
 import { demandeUpdatedRouter } from './routes/demande-update'
 import { getDemandesDep } from './routes/director/demande-get-all'
+import { toValidate } from './routes/demande-get-all-notValidated'
 //items
 import { ItemCreateRouter } from './routes/item-create'
 import { itemsOfDemandeRouter } from './routes/items-of-demande'
@@ -37,6 +38,7 @@ app.use(demandeGetAllRouter)
 app.use(demandeGetOneRouter)
 app.use(demandeUpdatedRouter)
 app.use(getDemandesDep)
+app.use(toValidate)
 //routes items
 app.use(ItemCreateRouter)
 app.use(itemsOfDemandeRouter)

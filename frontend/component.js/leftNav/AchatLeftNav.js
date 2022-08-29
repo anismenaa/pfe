@@ -16,16 +16,7 @@ const AchatLeftNav = () => {
       })
   }
 
-  const getMeCurrentUser = async() => {
-    const currentUser = await axios.get("https://pfe.dev/api/users/currentUser")
-    console.log(currentUser)
-    setEmail(currentUser.data.currentUser.email)
-    setDepartement(currentUser.data.currentUser.departementId)
-  }
-
-  useEffect(()=> {
-    getMeCurrentUser()
-  })
+ 
   return(
     <div className={styles.leftNav}>
       <img className={styles.profilepic} src="/images/avatar.jpg" alt="user image" />

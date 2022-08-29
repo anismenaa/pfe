@@ -34,10 +34,12 @@ const DirectorLeftNav = () => {
         <div className={styles.userDepartement}>{departement}</div>
       </div>
       <div className={styles.menuItem}>
-        <Item path="/mazal" title="employees" />
-        <Item path="/mazal" title="demandes achats" />
-        <Item path="/mazal" title="to validate" />
-        <Item path="/mazal" title="create demande achat" />
+        <Item path="/users/director/employes" title="employees" />
+        <Item path="/users/director/demandes-validated" title="demandes achats" />
+        <Item path="//users/director/demandes-achat-toValidate" title="to validate" />
+        
+        <Item path="/users/director/mes-demandes-achat" title="mes demandes achats" />
+        <Item path="/users/director/create-demande-achat" title="create demande achat" />
       </div>
       <div className={styles.signoutSection}>
         <button onClick={signout} className="btn btn-secondary w-50">signout</button>

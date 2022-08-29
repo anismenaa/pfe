@@ -50,7 +50,7 @@ async (req: Request, res: Response) => {
   // we save the user in the auth-db/users
   await user.save()
   
-  // genreate a JWT
+ /*  // genreate a JWT
   const userJwt = jwt.sign({
     id: user.id,
     email: user.email,
@@ -60,7 +60,7 @@ async (req: Request, res: Response) => {
   
   req.session = {
     jwt: userJwt
-  }
+  } */
 
   res.status(201).send(user)
 })
