@@ -9,17 +9,7 @@ import Link from "next/link";
 const ToValidate = () => {
   const [currentUser, setCurrentUser] = useState('')
   const [toValidate, setToValidate] = useState([])
-/* 
-  const getMeCurrentUser = async() => {
-    try {
-      const response = await axios.get('/api/users/currentUser')
-      setCurrentUser(response.data.currentUser)
-      console.log(response.data.currentUser)
-    } catch (error) {
-      console.log(error)
-    }
-  }
- */
+
   const getMeDemandeAchatToValidate = async() => {
     try {
       const response = await axios.get('/api/validation/toValidate')

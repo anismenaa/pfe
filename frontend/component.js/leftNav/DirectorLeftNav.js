@@ -36,7 +36,7 @@ const DirectorLeftNav = () => {
       <div className={styles.menuItem}>
         <Item path="/users/director/employes" title="employees" />
         <Item path="/users/director/demandes-validated" title="demandes achats" />
-        <Item path="//users/director/demandes-achat-toValidate" title="to validate" />
+        <Item path="/users/director/demandes-achat-toValidate" title="to validate" />
         
         <Item path="/users/director/mes-demandes-achat" title="mes demandes achats" />
         <Item path="/users/director/create-demande-achat" title="create demande achat" />

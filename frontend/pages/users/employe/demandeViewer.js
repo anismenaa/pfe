@@ -5,6 +5,11 @@ import EmployeLeftNav from "../../../component.js/leftNav/EmployeLeftNav";
 import employeStyle from "./employe.module.css"
 import axios from "axios";
 
+import { generateDemandeAchatPdf } from "../../../component.js/printPdf/demandeAchatPrint";
+
+
+
+
 
 const DemandeViewer = () => {
   const [demandeId, setIdDemande] = useState('')
@@ -73,7 +78,7 @@ const DemandeViewer = () => {
     if(demande.finalised){
       return(
         <div>
-          <button className="btn btn-light w-30">print</button>
+          <button onClick={()=>generateDemandeAchatPdf(demande, items)} className="btn btn-light w-30">print</button>
         </div>
       )
     }

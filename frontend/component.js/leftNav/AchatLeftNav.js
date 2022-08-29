@@ -4,7 +4,7 @@ import Item from "./Item";
 import axios from "axios"
 import Router from "next/router"
 
-const AchatLeftNav = () => {
+const AchatLeftNav = ({email, departement}) => {
   const [email, setEmail] = useState('')
   const [departement, setDepartement] = useState('')
 
