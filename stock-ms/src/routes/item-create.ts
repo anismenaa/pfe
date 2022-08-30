@@ -24,7 +24,8 @@ async(req, res) => {
   if (bonSortie.finalised) {
     throw new BRError('bon finalised, you cannot add items')
   }
-  const {itemId, quantity} = req.body
+
+  let {itemId, quantity} = req.body
 
   // now retreieve the item from items of bon entree
   const itemBe = await Item.findById(itemId)
@@ -36,6 +37,20 @@ async(req, res) => {
     throw new BRError('quantity is superior, please choose less or check your stock !')
   }
 
+  const itembs = await ItemBs.findOne({itemId:itemId})
+  if(itembs) {
+    quantity = itembs?.quantity + parseInt(quantity)
+    //we delete 
+    await itembs.delete()
+      .then(()=> {
+        console.log('item deleted, now wait for the update')
+      })
+      .catch(()=> {
+        console.log('an error while deleting the item')
+      })
+  }
+  
+   
   // build and save 
   const itemBuild = ItemBs.build({
     itemId: itemId,

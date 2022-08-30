@@ -16,7 +16,7 @@ async (req: Request, res: Response) => {
   }
 
   // get all bon sortie
-  const bonSortieAll = await BonSortie.find({})
+  const bonSortieAll = await BonSortie.find({finalised:true})
 
   const result: bonSortieData[] = []
   for(let i = 0; i < bonSortieAll.length; i++) {

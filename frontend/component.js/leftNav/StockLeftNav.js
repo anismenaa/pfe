@@ -34,10 +34,10 @@ const StockLeftNav = () => {
         <div className={styles.userDepartement}>{departement}</div>
       </div>
       <div className={styles.menuItem}>
-        <Item path="/mazal" title="create bon sortie" />
-        <Item path="/mazal" title="bons sorties in process" />
-        <Item path="/mazal" title="bons sorties final" />
-        <Item path="/mazal" title="bons entrees finals" />
+        <Item path="/users/stock/create-bon-sortie" title="create bon sortie" />
+        <Item path="/users/stock/bons-sorties-inProcess" title="bons sorties in process" />
+        <Item path="/users/stock/bons-sorties-finalised" title="bons sorties final" />
+        <Item path="/users/stock/bons-entrees" title="bons entrees finals" />
         <Item path="/users/stock/demandes-achats" title="demandes achats finales" />
       </div>
       <div className={styles.signoutSection}>

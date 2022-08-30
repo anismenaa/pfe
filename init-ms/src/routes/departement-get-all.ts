@@ -6,7 +6,7 @@ const router = express.Router()
 
 // we need to get the authentificated user
 router.get('/api/departements/', requireAuth, async (req, res) => {
-  if(req.currentUser?.authorization===1) {
+  if((req.currentUser?.authorization===1) || (req.currentUser?.authorization===4)) {
     const allDepartements = await Departement.find({})
 
     res.status(200).send(allDepartements)

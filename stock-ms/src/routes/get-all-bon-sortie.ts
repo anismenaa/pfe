@@ -13,7 +13,7 @@ async(req: Request, res: Response) => {
     throw new BRError('you are not authorised to get all the bon sortie')
   }
   // if it is authorized, we get all bon sortie
-  const allBonSortie = await BonSortie.find({})
+  const allBonSortie = await BonSortie.find({finalised: false})
 
   // we send the result to the client
   res.status(200).send(allBonSortie)

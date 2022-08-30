@@ -4,23 +4,35 @@ import employeStyle from "../employe/employe.module.css"
 import axios from "axios";
 import Link from "next/link";
 import AchatLeftNav from "../../../component.js/leftNav/AchatLeftNav";
+import DirectorAchatLeftNav from "../../../component.js/leftNav/DirectorAchatLeftNav";
 import StockLeftNav from "../../../component.js/leftNav/StockLeftNav";
 
-const DemandesAchats = () => {
-  const [demandes, setDemandes] = useState([])
+const BonSortiesInProcess = () => {
+  const [bonSorties, setBonSorties] = useState([])
 
-  const getAllDemandes = async() => {
+  const getAllBonSorties = async() => {
     try {
-      const response = await axios.get('/api/document/demande_achat/getAll')
-      setDemandes(response.data)
+      const response = await axios.get('/api/stock/bon_sortie/')
+      setBonSorties(response.data)
+      console.log(response.data)
     } catch (error) {
       console.log(error)
     }
   }
 
+  const deleteBs = async(id)=>{
+    await axios.delete('/api/stock/bon_sortie/delete/'+id)
+      .then(()=> {
+        console.log('bs deleted succ')
+      })
+      .catch(()=>{
+        console.log('error while deleting bs')
+      })
+  }
+
   useEffect(()=>{
-    getAllDemandes()
-  }, [])
+    getAllBonSorties()
+  }, [bonSorties])
 
   return(
     <div className={styles.profile}>
@@ -31,28 +43,23 @@ const DemandesAchats = () => {
         <table className="table table-dark">
             <thead className="thead-dark">
               <tr>
-                <th>title</th>
-                <th>userId</th>
-                <th>departementId</th>
+                <th>departement destination</th>
+                <th>date</th>
                 <th>finalised</th>
-                <th>validation 1</th>
-                <th>validation 2</th>
                 <th>actions</th>
               </tr>
             </thead>
             <tbody>
-              {demandes.map(demande => {
+              {bonSorties.map(bs => {
 
                 return(
                   <tr scope="row">
-                    <td>{demande.title}</td>
-                    <td>{demande.userId}</td>
-                    <td>{demande.departementId}</td>
-                    <td>{(demande.finalised).toString()}</td>
-                    <td>{(demande.validation_1).toString()}</td>
-                    <td>{(demande.validation_2).toString()}</td>
+                    <td>{bs.departementId}</td>
+                    <td>{bs.date_sortie}</td>
+                    <td>{(bs.finalised).toString()}</td>
                     <td>
-                      <Link href={{ pathname: '/users/stock/demandeViewerFinal', query: { idDemand: demande.demandeId } }}>
+                      <button onClick={()=>deleteBs(bs.id)} className="btn btn-danger">delete</button>
+                      <Link href={{ pathname: '/users/stock/view-bon-sortie', query: { idBonSortie: bs.id } }}>
                         <button className="btn btn-info">view</button>
                       </Link> 
                     </td>
@@ -66,4 +73,4 @@ const DemandesAchats = () => {
   )
 }
 
-export default DemandesAchats
+export default BonSortiesInProcess

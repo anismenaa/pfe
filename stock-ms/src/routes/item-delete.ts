@@ -1,6 +1,7 @@
 import { BRError, currentUser, natsWrapper, requireAuth } from '@anismenaapfeesi/common-api'
 import express from 'express'
 import { ItemBsDeletedPublisher } from '../events/itemBs-deleted-publisher'
+import { BonSortie } from '../models/bonSortie'
 import { ItemBs } from '../models/itemSortie'
 
 const router = express.Router()
@@ -19,6 +20,11 @@ async(req, res) => {
   const itemExist = await ItemBs.findById(itemId)
   if (!itemExist) {
     throw new BRError('item does not exist')
+  }
+
+  const bs = await BonSortie.findById(itemExist.bonSortieId)
+  if (bs && bs.finalised) {
+    throw new BRError('you can not delete this item, it is finalised')
   }
 
   await itemExist.delete()

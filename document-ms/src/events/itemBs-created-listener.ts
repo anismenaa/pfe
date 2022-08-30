@@ -10,6 +10,11 @@ export class ItemBsCreatedListener extends Listener<ItemBsCreatedEvent> {
   async onMessage(data: ItemBsCreatedEvent['data'], msg: Message) {
     const {id, bonSortie, quantity, itemId} = data
     
+    // check if the item is here
+    const itemExist = await ItemBs.findOne({itemId:itemId})
+    if(itemExist){
+      await itemExist.delete()
+    }
     const item = ItemBs.build({
       id,
       bonSortieId: bonSortie,
@@ -21,14 +26,14 @@ export class ItemBsCreatedListener extends Listener<ItemBsCreatedEvent> {
 
     // and then update the ItemAchat
     
-    const itemAchat = await ItemAchat.findById(itemId)
+   /*  const itemAchat = await ItemAchat.findById(itemId)
     if (itemAchat) {
       const newQuantity = itemAchat!.quantity - quantity
       await itemAchat?.updateOne({
         quantity: newQuantity
       })
     } 
-
+ */
 
     msg.ack()
   }

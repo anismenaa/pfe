@@ -23,7 +23,6 @@ async(req: Request, res: Response) => {
 
   // get the items 
   // fetch
-  console.log(bonSortieId)
   await ItemBs.find({bonSortieId: bonSortieId})
     .then ((data) => {
       res.status(200).send(data)

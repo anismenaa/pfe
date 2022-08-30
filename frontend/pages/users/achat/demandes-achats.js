@@ -54,8 +54,7 @@ const DemandesAchats = () => {
                     <td>
                       <Link href={{ pathname: '/users/achat/demandeViewerFinal', query: { idDemand: demande.demandeId } }}>
                         <button className="btn btn-info">view</button>
-                      </Link>
-                      
+                      </Link> 
                     </td>
                   </tr>
                 )
