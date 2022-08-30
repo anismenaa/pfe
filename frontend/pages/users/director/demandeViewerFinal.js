@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
 import styles from "../profile.module.css"
 import viewer from "../employe/viewer.module.css"
-import EmployeLeftNav from "../../../component.js/leftNav/EmployeLeftNav";
 import employeStyle from "../employe/employe.module.css"
 import axios from "axios";
-import DirectorLeftNav from "../../../component.js/leftNav/DirectorLeftNav";
-import { generateDemandeAchatSupplyPdf } from "../../../component.js/printPdf/demandeAchatSupplyPrint";
+import { generateDemandeAchatDocumentPdf } from "../../../component.js/printPdf/demandeAchatDocuments";
+import AchatLeftNav from "../../../component.js/leftNav/AchatLeftNav";
 import DirectorAchatLeftNav from "../../../component.js/leftNav/DirectorAchatLeftNav";
+import DirectorLeftNav from "../../../component.js/leftNav/DirectorLeftNav";
 
 const DemandeViewer = () => {
-  const [demandeId, setIdDemande] = useState('')
   const [demande, setDemande] = useState('')
   const [items, setItems] = useState([])
+  const [demandeId, setDemandeId] = useState('')
 
   const getQueryParams = query => {
     return query
@@ -28,82 +28,29 @@ const DemandeViewer = () => {
 
   // get the demande
   const getDemande = async(id) => {
-    const uri = "https://pfe.dev/api/demandes/"+id
-    const response = await axios.get(uri)
-    setDemande(response.data)
-
-    console.log(response.data)
-  }
-  // get the items
-  const getAllItems = async(id) => {
     try {
-      const uri = "https://pfe.dev/api/items/"+id
+      const uri = "/api/document/demande_achat/"+id
       const response = await axios.get(uri)
-      setItems(response.data)
+      setDemande(response.data)
+      setItems(response.data.items)
+      setDemandeId(id)
+
       console.log(response.data)
     } catch (error) {
-      console.log(error)
+      
     }
   }
+
 
   useEffect(()=> {
-    setIdDemande(getQueryParams(window.location.search).idDemand)
     getDemande(getQueryParams(window.location.search).idDemand)
-    getAllItems(getQueryParams(window.location.search).idDemand)
-  })
+  }, [])
 
-  const displayValidation_1Button = () => {
-    if (demande.finalised === true && demande.validation_1===false) {
-      return(
-        <div>
-          <button onClick={async()=>{
-            try {
-              const uri = "/api/validation/"+demande.id
-              console.log(uri)
-              const response = await axios.put(uri)
-              console.log("demande validation_1 successfully")
-            } catch (error) {
-              console.log(error)
-            }
-          }}  className="btn btn-success w-30">validate</button>
-        </div>
-      )
-    }
-  }
-
-  const displayfinalisedButton = () => {
-    if (demande.finalised === false) {
-      return(
-        <div>
-          <button onClick={async()=>{
-            try {
-              const uri = "/api/demandes/finalise/"+demande.id
-              console.log(uri)
-              const response = await axios.put(uri)
-              console.log("demande finalised successfully")
-            } catch (error) {
-              console.log(error)
-            }
-          }}  className="btn btn-success w-30">finalise</button>
-        </div>
-      )
-    }
-  }
-
-  const displayPrintButton = () => {
-    if(demande.finalised){
-      return(
-        <div>
-          <button onClick={()=> generateDemandeAchatSupplyPdf(demande, items)} className="btn btn-light w-30">print</button>
-        </div>
-      )
-    }
-  }
 
   return(
     <div className={styles.profile}>
       <div className={styles.leftSection}>
-        <DirectorAchatLeftNav />
+        <DirectorLeftNav />
       </div>
       <div className={employeStyle.rightSection}>
         <div className={viewer.global}>
@@ -138,20 +85,20 @@ const DemandeViewer = () => {
                   )
                 })}
               </tbody>
-            </table>
+            </table> 
           </div>
           <div className={viewer.validation_section}>
               <p><strong>director of the departement : </strong>{JSON.stringify(demande.validation_1) }</p>
               <p><strong>supply director : </strong>{JSON.stringify(demande.validation_2)}</p>
           </div>
           <div className={viewer.idDemande}>
-              <p>demande Id : {demande.id}</p>
+              <p>demande Id : {demandeId}</p>
           </div>
         </div>
         <div className={viewer.buttons}>
-            {displayfinalisedButton()}
-            {displayValidation_1Button()}
-            {displayPrintButton()}
+          <div>
+            <button onClick={()=> generateDemandeAchatDocumentPdf(demande, items)} className="btn btn-light w-30">print</button>
+          </div>
         </div>
       </div>
     </div>

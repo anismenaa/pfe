@@ -25,7 +25,7 @@ const StockLeftNav = () => {
 
   useEffect(()=> {
     getMeCurrentUser()
-  })
+  }, [])
   return(
     <div className={styles.leftNav}>
       <img className={styles.profilepic} src="/images/avatar.jpg" alt="user image" />
@@ -34,10 +34,11 @@ const StockLeftNav = () => {
         <div className={styles.userDepartement}>{departement}</div>
       </div>
       <div className={styles.menuItem}>
-        <Item path="/mazal" title="mes demandes achats" />
-        <Item path="/mazal" title="bons sorties" />
         <Item path="/mazal" title="create bon sortie" />
-        <Item path="/mazal" title="create demande achat" />
+        <Item path="/mazal" title="bons sorties in process" />
+        <Item path="/mazal" title="bons sorties final" />
+        <Item path="/mazal" title="bons entrees finals" />
+        <Item path="/users/stock/demandes-achats" title="demandes achats finales" />
       </div>
       <div className={styles.signoutSection}>
         <button onClick={signout} className="btn btn-secondary w-50">signout</button>

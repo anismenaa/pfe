@@ -24,7 +24,7 @@ async (req: Request, res: Response) => {
       const demande = demandes[i]
       const items = await Item.find({demandeId: demande._id})
       // verify if the demande is finalised
-      if (demande.finalised) {
+      if (demande.finalised && demande.validation_1 && demande.validation_2) {
         let elt: demandeAchatData = {
           demandeId: demande._id,
           departementId: demande.departementId,

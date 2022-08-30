@@ -16,14 +16,14 @@ async (req: Request, res: Response) => {
     throw new BRError("demande achat with this id does not exist")
   }
   // who can view : 2, 6
-  if ((req.currentUser?.authorization === 2) || (req.currentUser?.authorization === 6) || (req.currentUser?.departementId === demande?.departementId)) {
+  if ((req.currentUser?.authorization === 2) || (req.currentUser?.authorization === 6) || (req.currentUser?.authorization === 4) || (req.currentUser?.departementId === demande?.departementId)) {
     // we get the demandes and the items 
     //const demandes = await Demande.find({})
     
     let alldemandes: demandeAchatData[] = []
     
       const items = await Item.find({demandeId: demande!._id})
-      if (demande.finalised) {
+      if (demande.finalised && demande.validation_1 && demande.validation_2) {
         let elt: demandeAchatData = {
           demandeId: demande._id,
           departementId: demande.departementId,

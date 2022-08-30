@@ -4,12 +4,10 @@ import { BonEntree } from '../models/bonEntree'
 
 const router = express.Router()
 
-router.get('/api/achats/bon_entree/:id', currentUser, requireAuth,
+router.get('/api/achats/be-to-validate', currentUser, requireAuth,
 async (req: Request, res: Response)=> {
-
-  const bonEntreeId = req.params.id
-
-  await BonEntree.findById(bonEntreeId)
+ 
+  await BonEntree.find({validate_BE: false})
     .then((data) => {
       res.status(200).send(data)
     })
@@ -19,4 +17,4 @@ async (req: Request, res: Response)=> {
 })
 
 
-export {router as getOneBonEntrees}
+export {router as getAllBonEntreesToValidate}

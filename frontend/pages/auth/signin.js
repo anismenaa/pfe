@@ -51,7 +51,7 @@ import Router from "next/router"
 
     }
 
-    /* const messageAffichage = () => {
+    const messageAffichage = () => {
       if(errors.length > 0) {
         return(
           <div className="alert alert-danger" role="alert">  
@@ -67,7 +67,7 @@ import Router from "next/router"
           </div>
         )
       }
-    } */
+    } 
     return(
       <div className={styles.signin_page}>
         <div className={styles.sigin_title}>
@@ -91,7 +91,7 @@ import Router from "next/router"
           </div>
         </div>
         <div>
-          
+          {messageAffichage()}
         </div>
       </div>
     )

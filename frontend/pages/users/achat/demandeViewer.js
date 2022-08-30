@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
 import styles from "../profile.module.css"
 import viewer from "../employe/viewer.module.css"
-import EmployeLeftNav from "../../../component.js/leftNav/EmployeLeftNav";
 import employeStyle from "../employe/employe.module.css"
 import axios from "axios";
-import DirectorLeftNav from "../../../component.js/leftNav/DirectorLeftNav";
 import { generateDemandeAchatSupplyPdf } from "../../../component.js/printPdf/demandeAchatSupplyPrint";
-import DirectorAchatLeftNav from "../../../component.js/leftNav/DirectorAchatLeftNav";
+import AchatLeftNav from "../../../component.js/leftNav/AchatLeftNav";
 
 const DemandeViewer = () => {
   const [demandeId, setIdDemande] = useState('')
@@ -32,7 +30,6 @@ const DemandeViewer = () => {
     const response = await axios.get(uri)
     setDemande(response.data)
 
-    console.log(response.data)
   }
   // get the items
   const getAllItems = async(id) => {
@@ -40,7 +37,6 @@ const DemandeViewer = () => {
       const uri = "https://pfe.dev/api/items/"+id
       const response = await axios.get(uri)
       setItems(response.data)
-      console.log(response.data)
     } catch (error) {
       console.log(error)
     }
@@ -50,26 +46,9 @@ const DemandeViewer = () => {
     setIdDemande(getQueryParams(window.location.search).idDemand)
     getDemande(getQueryParams(window.location.search).idDemand)
     getAllItems(getQueryParams(window.location.search).idDemand)
-  })
+  }, [demande])
 
-  const displayValidation_1Button = () => {
-    if (demande.finalised === true && demande.validation_1===false) {
-      return(
-        <div>
-          <button onClick={async()=>{
-            try {
-              const uri = "/api/validation/"+demande.id
-              console.log(uri)
-              const response = await axios.put(uri)
-              console.log("demande validation_1 successfully")
-            } catch (error) {
-              console.log(error)
-            }
-          }}  className="btn btn-success w-30">validate</button>
-        </div>
-      )
-    }
-  }
+
 
   const displayfinalisedButton = () => {
     if (demande.finalised === false) {
@@ -103,7 +82,7 @@ const DemandeViewer = () => {
   return(
     <div className={styles.profile}>
       <div className={styles.leftSection}>
-        <DirectorAchatLeftNav />
+        <AchatLeftNav />
       </div>
       <div className={employeStyle.rightSection}>
         <div className={viewer.global}>
@@ -150,7 +129,6 @@ const DemandeViewer = () => {
         </div>
         <div className={viewer.buttons}>
             {displayfinalisedButton()}
-            {displayValidation_1Button()}
             {displayPrintButton()}
         </div>
       </div>

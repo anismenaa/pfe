@@ -25,7 +25,7 @@ const DirectorAchatLeftNav = () => {
 
   useEffect(()=> {
     getMeCurrentUser()
-  })
+  }, [])
   return(
     <div className={styles.leftNav}>
       <img className={styles.profilepic} src="/images/avatar.jpg" alt="user image" />
@@ -38,8 +38,9 @@ const DirectorAchatLeftNav = () => {
         <Item path="/users/achat-director/mes-demandes-achats" title="mes demandes achats" />
         <Item path="/mazal" title="bon entrees" />
         <Item path="/users/achat-director/toValidate" title="to validate" />
-        <Item path="/mazal" title="create bon entree" />
+        <Item path="/users/achat-director/bon-entree-toValidate" title="validate BE" />
         <Item path="/users/achat-director/create-demande-achat" title="create demande achat" />
+        <Item path="/users/achat-director/demandes-achats" title="demandes achats" />
       </div>
       <div className={styles.signoutSection}>
         <button onClick={signout} className="btn btn-secondary w-50">signout</button>

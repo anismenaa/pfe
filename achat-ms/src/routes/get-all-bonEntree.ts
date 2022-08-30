@@ -4,9 +4,9 @@ import { BonEntree } from '../models/bonEntree'
 
 const router = express.Router()
 
-router.get('/api/achats/bon_entree', currentUser, requireAuth,
+router.get('/api/achats/bon_entree/all', currentUser, requireAuth,
 async (req: Request, res: Response)=> {
-  if (req.currentUser?.authorization!=6) {
+  if (req.currentUser?.authorization != 6) {
     throw new BRError('you are not authorized, must work in the supply department !')
   }
 

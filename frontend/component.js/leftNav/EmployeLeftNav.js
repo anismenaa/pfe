@@ -25,7 +25,7 @@ const EmployeLeftNav = () => {
 
   useEffect(()=> {
     getMeCurrentUser()
-  })
+  }, [])
   return(
     <div className={styles.leftNav}>
       <img className={styles.profilepic} src="/images/avatar.jpg" alt="user image" />

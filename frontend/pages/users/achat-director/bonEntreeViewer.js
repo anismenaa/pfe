@@ -4,14 +4,14 @@ import viewer from "../employe/viewer.module.css"
 import EmployeLeftNav from "../../../component.js/leftNav/EmployeLeftNav";
 import employeStyle from "../employe/employe.module.css"
 import axios from "axios";
-import DirectorLeftNav from "../../../component.js/leftNav/DirectorLeftNav";
-import { generateDemandeAchatSupplyPdf } from "../../../component.js/printPdf/demandeAchatSupplyPrint";
 import DirectorAchatLeftNav from "../../../component.js/leftNav/DirectorAchatLeftNav";
+import AchatLeftNav from "../../../component.js/leftNav/AchatLeftNav";
+import { generateBonEntreePdf } from "../../../component.js/printPdf/bonEntreePrint";
 
-const DemandeViewer = () => {
-  const [demandeId, setIdDemande] = useState('')
-  const [demande, setDemande] = useState('')
+const BeViewer = () => {
+  const [be, setBe] = useState('')
   const [items, setItems] = useState([])
+  const total = 0
 
   const getQueryParams = query => {
     return query
@@ -27,41 +27,41 @@ const DemandeViewer = () => {
   };
 
   // get the demande
-  const getDemande = async(id) => {
-    const uri = "https://pfe.dev/api/demandes/"+id
+  const getBe = async(id) => {
+    const uri = "/api/achats/bon_entree/"+id
     const response = await axios.get(uri)
-    setDemande(response.data)
-
-    console.log(response.data)
+    setBe(response.data)
+    
   }
   // get the items
   const getAllItems = async(id) => {
     try {
-      const uri = "https://pfe.dev/api/items/"+id
+      const uri = "https://pfe.dev/api/achats/items/"+id
       const response = await axios.get(uri)
       setItems(response.data)
-      console.log(response.data)
     } catch (error) {
       console.log(error)
     }
   }
 
   useEffect(()=> {
-    setIdDemande(getQueryParams(window.location.search).idDemand)
-    getDemande(getQueryParams(window.location.search).idDemand)
-    getAllItems(getQueryParams(window.location.search).idDemand)
-  })
+    getBe(getQueryParams(window.location.search).idBonEntree)
+    getAllItems(getQueryParams(window.location.search).idBonEntree)
+  },[be])
 
-  const displayValidation_1Button = () => {
-    if (demande.finalised === true && demande.validation_1===false) {
+
+
+  const displayvalidateButton = () => {
+    if (be.validate_BE === false) {
+
       return(
         <div>
           <button onClick={async()=>{
             try {
-              const uri = "/api/validation/"+demande.id
+              const uri = "/api/achats/bon_entree/validate/"+be.id
               console.log(uri)
               const response = await axios.put(uri)
-              console.log("demande validation_1 successfully")
+              console.log("be validated successfully")
             } catch (error) {
               console.log(error)
             }
@@ -71,33 +71,14 @@ const DemandeViewer = () => {
     }
   }
 
-  const displayfinalisedButton = () => {
-    if (demande.finalised === false) {
-      return(
-        <div>
-          <button onClick={async()=>{
-            try {
-              const uri = "/api/demandes/finalise/"+demande.id
-              console.log(uri)
-              const response = await axios.put(uri)
-              console.log("demande finalised successfully")
-            } catch (error) {
-              console.log(error)
-            }
-          }}  className="btn btn-success w-30">finalise</button>
-        </div>
-      )
-    }
-  }
-
   const displayPrintButton = () => {
-    if(demande.finalised){
+   
       return(
         <div>
-          <button onClick={()=> generateDemandeAchatSupplyPdf(demande, items)} className="btn btn-light w-30">print</button>
+          <button onClick={()=> generateBonEntreePdf(be, items, total)} className="btn btn-light w-30">print</button>
         </div>
       )
-    }
+    
   }
 
   return(
@@ -110,13 +91,12 @@ const DemandeViewer = () => {
           <div className={viewer.header}>
             <img src="/images/demande_logo.png" alt="rail logistic logo" />
             <div className={viewer.header_information}>
-              <p><strong>Date : </strong>{demande.date_creation}</p>
-              <p><strong>From : </strong>{demande.userId}</p>
-              <p><strong>Departement : </strong>{demande.departementId}</p>
+              <p><strong>Departement : </strong>achat</p>
+              <p><strong>Vendor : </strong>{be.vendor}</p>
             </div>
           </div>
           <div className={viewer.title_section}>
-            <h2>Object : <span className={viewer.title}>{demande.title}</span></h2>
+            <h2>Bon Entree :</h2>
           </div>
           <div className={viewer.items}>
             <table className="table">
@@ -125,15 +105,19 @@ const DemandeViewer = () => {
                   <th>itemId</th>
                   <th>name</th>
                   <th>quantity</th>
+                  <th>prix_unitaire</th>
                 </tr>
               </thead>
               <tbody>
-                {items.map(item => {               
+                {items.map(item => {    
+                  // on calcule le total
+                  total+=item.prix_unitaire      
                   return(
                     <tr scope="row">
                       <td>{item.id}</td>
                       <td>{item.name}</td>
                       <td>{(item.quantity).toString()}</td>
+                      <td>{(item.prix_unitaire).toString()}</td>
                     </tr>               
                   )
                 })}
@@ -141,16 +125,17 @@ const DemandeViewer = () => {
             </table>
           </div>
           <div className={viewer.validation_section}>
-              <p><strong>director of the departement : </strong>{JSON.stringify(demande.validation_1) }</p>
-              <p><strong>supply director : </strong>{JSON.stringify(demande.validation_2)}</p>
+              <p><strong>prix total : </strong>{JSON.stringify(total)}</p>
+          </div>
+          <div className={viewer.validation_section}>
+              <p><strong>supply director : </strong>{JSON.stringify(be.validate_BE)}</p>
           </div>
           <div className={viewer.idDemande}>
-              <p>demande Id : {demande.id}</p>
+              <p>bon entree Id : {be.id}</p>
           </div>
         </div>
         <div className={viewer.buttons}>
-            {displayfinalisedButton()}
-            {displayValidation_1Button()}
+            {displayvalidateButton()}
             {displayPrintButton()}
         </div>
       </div>
@@ -158,4 +143,4 @@ const DemandeViewer = () => {
   )
 }
 
-export default DemandeViewer
+export default BeViewer

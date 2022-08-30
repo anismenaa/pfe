@@ -11,7 +11,7 @@ const router = express.Router()
 router.get('/api/document/demande_achat/getAll', currentUser, requireAuth,
 async (req: Request, res: Response) => {
   // who can view : 2, 6
-  if ((req.currentUser?.authorization === 2) || (req.currentUser?.authorization === 6)) {
+  if ((req.currentUser?.authorization === 2) || (req.currentUser?.authorization === 6) || (req.currentUser?.authorization === 4)) {
     // we get the demandes and the items 
     //const demandes = await Demande.find({})
     
@@ -22,7 +22,7 @@ async (req: Request, res: Response) => {
       const demande = demandes[i]
       const items = await Item.find({demandeId: demande._id})
       // verify if the demande is finalised
-      if (demande.finalised) {
+      if (demande.finalised && demande.validation_1 && demande.validation_2) {
         let elt: demandeAchatData = {
           demandeId: demande._id,
           departementId: demande.departementId,

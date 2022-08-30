@@ -14,6 +14,7 @@ import { itemDelete } from './routes/item-delete'
 import { itemGetOne } from './routes/item-get-one'
 import { getAllItems } from './routes/get-item-bonEntree'
 import { BonEntreeValidated } from './routes/validate-bon-entree'
+import { getAllBonEntreesToValidate } from './routes/be-to-validate'
 const port = 3000
 
 const app = express()
@@ -34,11 +35,13 @@ app.use(deleteBonEntree)
 app.use(BonEntreeValidated)
 app.use(getAllBonEntrees)
 app.use(getOneBonEntrees)
+app.use(getAllBonEntreesToValidate)
 
 app.use(itemCreateRouter)
 app.use(itemDelete)
 app.use(itemGetOne)
 app.use(getAllItems)
+
 // for not found pages (must be before errorHandler)
 app.all('*', async (req, res, next) => {
   next(new NotFoundError()) 

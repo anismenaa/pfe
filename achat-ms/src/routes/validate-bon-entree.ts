@@ -8,7 +8,7 @@ const router = express.Router()
 router.put('/api/achats/bon_entree/validate/:id', currentUser, requireAuth,
 async(req: Request, res: Response) => {
   // check for the authorization
-  if (req.currentUser?.authorization != 6) {
+  if (req.currentUser?.authorization != 2) {
     throw new BRError('you are not authorized to finalise this bon entre')
   }
   // get the id

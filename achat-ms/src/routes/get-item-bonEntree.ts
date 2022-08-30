@@ -5,10 +5,7 @@ import { Item } from '../models/item'
 const router = express.Router()
 
 router.get('/api/achats/items/:idBonEntree', currentUser, requireAuth, async (req, res) => {
-  
-  if (req.currentUser?.authorization!=6){
-    throw new BRError('you are not authorized')
-  }
+
 
   const idBonEntree = req.params.idBonEntree
 
