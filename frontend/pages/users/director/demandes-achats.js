@@ -20,7 +20,6 @@ const DemandesAchats = () => {
     try {
       const response = await axios.get('/api/document/demande_achat/perDepartement/'+departement)
       setDemandes(response.data)
-      console.log(response.data)
     } catch (error) {
       console.log(error)
     }

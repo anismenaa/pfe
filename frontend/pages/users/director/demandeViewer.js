@@ -52,8 +52,8 @@ const DemandeViewer = () => {
     getAllItems(getQueryParams(window.location.search).idDemand)
   })
 
-  const displayValidation_2Button = () => {
-    if (demande.validation_2===false) {
+  const displayValidation_1Button = () => {
+    if (demande.finalised === true && demande.validation_1===false) {
       return(
         <div>
           <button onClick={async()=>{
@@ -103,7 +103,7 @@ const DemandeViewer = () => {
   return(
     <div className={styles.profile}>
       <div className={styles.leftSection}>
-        <DirectorAchatLeftNav />
+        <DirectorLeftNav />
       </div>
       <div className={employeStyle.rightSection}>
         <div className={viewer.global}>
@@ -150,7 +150,7 @@ const DemandeViewer = () => {
         </div>
         <div className={viewer.buttons}>
             {displayfinalisedButton()}
-            {displayValidation_2Button()}
+            {displayValidation_1Button()}
             {displayPrintButton()}
         </div>
       </div>

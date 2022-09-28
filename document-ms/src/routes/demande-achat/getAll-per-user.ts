@@ -13,7 +13,7 @@ async (req: Request, res: Response) => {
   
   // verify if it's the same user
 
-  if ((req.currentUser?.id != req.params.userId) || (req.currentUser?.authorization === 2) || (req.currentUser?.authorization === 6)) {
+  if ((req.currentUser?.id === req.params.userId) || (req.currentUser?.authorization === 2) || (req.currentUser?.authorization === 6)) {
     // we get the demandes and the items 
     //const demandes = await Demande.find({})
     
